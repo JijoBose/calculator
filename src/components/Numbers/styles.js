@@ -1,7 +1,10 @@
 export default {
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#e0e0e0',
+  },
+  operatorKey: {
+    backgroundColor: '#f89432',
   },
   txtDefault: {
     color: '#000',

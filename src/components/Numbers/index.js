@@ -6,11 +6,9 @@ import {View, Text, TouchableNativeFeedback} from 'react-native';
 import styles from './styles';
 
 const Numbers = (props) => {
-  //This will call the bound function from its parent component
-  //to handle button press action/event
   const handleOnPress = (value) => {
     requestAnimationFrame(() => {
-      this.props.onBtnPress(value);
+      props.onNumberTap(value);
     });
   };
 
@@ -23,7 +21,11 @@ const Numbers = (props) => {
               key={index}
               onPress={() => handleOnPress(col)}
               background={TouchableNativeFeedback.SelectableBackground()}>
-              <View style={styles.contButton}>
+              <View
+                style={[
+                  styles.contButton,
+                  !Number.isInteger(parseInt(col)) ? styles.operatorKey : null,
+                ]}>
                 <Text style={styles.txtDefault}>{col}</Text>
               </View>
             </TouchableNativeFeedback>
