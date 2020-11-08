@@ -30,15 +30,55 @@ const height = Dimensions.get('window').height;
 const App = () => {
   const [result, setResult] = useState(0);
   const [operator, setOperator] = useState(null);
+  const [preVal, setPreVal] = useState('');
+  const [nextVal, setNextVal] = useState('');
+
+  const calculations = (num) => {
+    console.log(num);
+    switch (operator) {
+      case '+':
+        setResult(result + num);
+        break;
+      case '-':
+        setResult(result - num);
+        break;
+      case 'x':
+        setResult(result * num);
+        break;
+      case '÷':
+        setResult(result / num);
+        break;
+      default:
+        break;
+    }
+  };
 
   const onNumberTap = (num) => {
     if (['÷', 'x', '+', '=', '-'].includes(num)) {
       setOperator(num);
     } else if (['CLEAR', 'DEL'].includes(num)) {
-      setResult(0);
+      setResult('');
+      setNextVal('');
+      setPreVal('');
       setOperator(null);
     } else {
-      setResult(num);
+      // console.log('Operator: ' + operator);
+      // console.log('result: ' + result);
+      // console.log('number: ' + num);
+      if (result === 0 && operator === null) {
+        let res = result + preVal + num;
+        console.log(res);
+        setPreVal(res);
+      }
+      if (operator !== null) {
+        calculations(Numbers(preVal));
+      }
+      // if (operator !== null) {
+      //   calculations(Number(num));
+      // } else {
+      //   // let nextData =
+      //   setResult(num);
+      // }
     }
   };
 
@@ -50,7 +90,7 @@ const App = () => {
           <View style={styles.outputView}>
             <View style={styles.mainResult}>
               <Text style={styles.resultView}>
-                {result} {operator}
+                {result || preVal} {operator}
               </Text>
             </View>
           </View>
