@@ -1,20 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Dimensions,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {SafeAreaView, Dimensions, View, Text, StatusBar} from 'react-native';
+import styles from './styles';
 import Numbers from '../src/components/Numbers';
 
 const buttons = [
@@ -24,8 +10,6 @@ const buttons = [
   ['1', '2', '3', '+'],
   ['.', '0', '=', '-'],
 ];
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 
 const App = () => {
   const [result, setResult] = useState('');
@@ -97,25 +81,5 @@ const App = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  mainView: {
-    height: height,
-  },
-  outputView: {
-    height: height * 0.2,
-    width: width,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-  },
-  resultView: {
-    fontSize: 80,
-  },
-  body: {
-    height: height * 0.8,
-    backgroundColor: 'white',
-  },
-});
 
 export default App;
