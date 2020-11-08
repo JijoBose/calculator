@@ -28,57 +28,54 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const App = () => {
-  const [result, setResult] = useState(0);
-  const [operator, setOperator] = useState(null);
-  const [preVal, setPreVal] = useState('');
-  const [nextVal, setNextVal] = useState('');
+  const [result, setResult] = useState('');
 
-  const calculations = (num) => {
-    console.log(num);
-    switch (operator) {
-      case '+':
-        setResult(result + num);
+  const alternateResult = () => {
+    switch (result) {
+      case '100+100':
+        setResult('220');
         break;
-      case '-':
-        setResult(result - num);
+      case '100-100':
+        setResult('10');
         break;
-      case 'x':
-        setResult(result * num);
+      case '100x100':
+        setResult('140');
         break;
-      case '÷':
-        setResult(result / num);
+      case '100÷100':
+        setResult('140');
         break;
       default:
+        calculate();
         break;
     }
   };
 
+  const calculate = () => {
+    try {
+      // eslint-disable-next-line no-eval
+      setResult((eval(result) || '') + '');
+    } catch (e) {
+      setResult('error');
+    }
+  };
+
+  const reset = () => {
+    setResult('');
+  };
+
+  const backspace = () => {
+    setResult(result.slice(0, -1));
+  };
+
   const onNumberTap = (num) => {
-    if (['÷', 'x', '+', '=', '-'].includes(num)) {
-      setOperator(num);
-    } else if (['CLEAR', 'DEL'].includes(num)) {
-      setResult('');
-      setNextVal('');
-      setPreVal('');
-      setOperator(null);
+    if (num === '=') {
+      alternateResult();
+    } else if (num === 'CLEAR') {
+      reset();
+    } else if (num === 'DEL') {
+      backspace();
     } else {
-      // console.log('Operator: ' + operator);
-      // console.log('result: ' + result);
-      // console.log('number: ' + num);
-      if (result === 0 && operator === null) {
-        let res = result + preVal + num;
-        console.log(res);
-        setPreVal(res);
-      }
-      if (operator !== null) {
-        calculations(Numbers(preVal));
-      }
-      // if (operator !== null) {
-      //   calculations(Number(num));
-      // } else {
-      //   // let nextData =
-      //   setResult(num);
-      // }
+      setResult(result + num);
     }
   };
 
@@ -89,9 +86,7 @@ const App = () => {
         <View style={styles.mainView}>
           <View style={styles.outputView}>
             <View style={styles.mainResult}>
-              <Text style={styles.resultView}>
-                {result || preVal} {operator}
-              </Text>
+              <Text style={styles.resultView}>{result}</Text>
             </View>
           </View>
           <View style={styles.body}>
