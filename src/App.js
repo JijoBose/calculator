@@ -70,7 +70,7 @@ const App = () => {
         <View style={styles.mainView}>
           <View style={styles.outputView}>
             <View style={styles.mainResult}>
-              <Text style={styles.resultView}>{result}</Text>
+              <Text style={styles.resultView}>{result || 0}</Text>
             </View>
           </View>
           <View style={styles.body}>
